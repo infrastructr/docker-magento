@@ -2,8 +2,6 @@
 
 set -e
 
-#--search-engine="${MAGENTO_SEARCH_ENGINE}" \
-
 bin/magento setup:install \
 --base-url="${MAGENTO_BASE_URL}" \
 --db-host="${MAGENTO_DB_HOST}" \
@@ -20,5 +18,7 @@ bin/magento setup:install \
 --timezone="${MAGENTO_TIMEZONE}" \
 --use-rewrites="${MAGENTO_USE_REWRITES}" \
 --backend-frontname="${MAGENTO_BACKEND_FRONTNAME}" \
+
+/magento-post-install.sh
 
 docker-php-entrypoint "$@"
