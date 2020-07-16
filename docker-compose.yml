@@ -1,0 +1,62 @@
+version: '2'
+services:
+  app:
+    image: infrastructr/magento:dev
+    build:
+      context: .
+      args:
+        MAGENTO_PUBLIC_KEY: ${MAGENTO_PUBLIC_KEY}
+        MAGENTO_PRIVATE_KEY: ${MAGENTO_PRIVATE_KEY}
+    environment:
+      MAGENTO_BASE_URL: http://shop.local
+      MAGENTO_DB_HOST: database
+      MAGENTO_DB_USER: shop
+      MAGENTO_DB_PASSWORD: secret
+      MAGENTO_DB_NAME: shop
+      MAGENTO_ADMIN_FIRSTNAME: Average
+      MAGENTO_ADMIN_LASTNAME: Joe
+      MAGENT_ADMIN_EMAIL: average.joe@example.org
+      MAGENTO_ADMIN_USER: admin
+      MAGENTO_ADMIN_PASSWORD: secret
+      MAGENTO_LANGUAGE: de_DE
+      MAGENTO_CURRENCY: EUR
+      MAGENTO_TIMEZONE: Europe/Berlin
+      MAGENTO_USE_REWRITES: 1
+      MAGENTO_BACKEND_FRONTNAME: admin_nimda
+      MAGENTO_SEARCH_ENGINE: elasticsearch7
+      MAGENTO_ELASTICSEARCH_HOST: search
+      MAGENTO_ELASTICSEARCH_INDEX_PREFIX: shop
+      MAGENTO_ELASTICSEARCH_TIMEOUT: 15
+      MAGENTO_ELASTICSEARCH_ENABLE_AUTH: yes
+      MAGENTO_ELASTICSEARCH_USERNAME: shop
+      MAGENTO_ELASTICSEARCH_PASSWORD: secret
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - app:/var/www/html
+    depends_on:
+      - database
+  database:
+    image: mysql:5.7.31
+    environment:
+      MYSQL_USER: shop
+      MYSQL_DATABASE: shop
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+    volumes:
+      - database:/var/lib/mysql
+  search:
+    image: elasticsearch:7.8.0
+    environment:
+      discovery.type: single-node
+      ELASTICSEARCH_USERNAME: shop
+      ELASTICSEARCH_PASSWORD: secret
+      xpack.security.enabled: true
+    ports:
+      - 9200:9200
+      - 9300:9300
+
+volumes:
+  app:
+  database:
