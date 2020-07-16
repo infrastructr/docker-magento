@@ -1,4 +1,4 @@
-[![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/infrastructr/magento)](https://hub.docker.com/repository/docker/infrastructr/magento/general)
+[![Travis (.org) branch](https://img.shields.io/travis/infrastructr/docker-magento/master)](https://travis-ci.org/infrastructr/docker-magento)
 [![Docker Pulls](https://img.shields.io/docker/pulls/infrastructr/magento)](https://hub.docker.com/r/infrastructr/magento)
 [![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/infrastructr/docker-magento)](https://hub.docker.com/repository/docker/infrastructr/magento/tags?page=1)
 
