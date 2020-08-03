@@ -2,7 +2,7 @@ FROM php:7.3.20-apache-buster
 
 ARG MAGENTO_PUBLIC_KEY
 ARG MAGENTO_PRIVATE_KEY
-ARG MAGENTO_VERSION="2.3.5"
+ARG MAGENTO_VERSION="2.4.0"
 
 ENV MAGENTO_BASE_URL="http://shop.local"
 ENV MAGENTO_DB_HOST="database"
@@ -54,7 +54,8 @@ RUN docker-php-ext-configure \
     soap \
     xsl \
     zip \
-    opcache
+    opcache \
+    sockets
 
 RUN mkdir -p /opt/composer \
   && cd /opt/composer \
