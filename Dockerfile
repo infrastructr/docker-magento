@@ -2,22 +2,29 @@ FROM php:7.3.20-apache-buster
 
 ARG MAGENTO_PUBLIC_KEY
 ARG MAGENTO_PRIVATE_KEY
+ARG MAGENTO_VERSION="2.3.5"
 
-ENV MAGENTO_BASE_URL "http://shop.local"
-ENV MAGENTO_DB_HOST "database"
-ENV MAGENTO_DB_USER "shop"
-ENV MAGENTO_DB_PASSWORD "secret123"
-ENV MAGENTO_DB_NAME "shop"
-ENV MAGENTO_ADMIN_FIRSTNAME "Average"
-ENV MAGENTO_ADMIN_LASTNAME "Joe"
-ENV MAGENT_ADMIN_EMAIL "average.joe@example.org"
-ENV MAGENTO_ADMIN_USER "admin"
-ENV MAGENTO_ADMIN_PASSWORD "secret123"
-ENV MAGENTO_LANGUAGE "de_DE"
-ENV MAGENTO_CURRENCY "EUR"
-ENV MAGENTO_TIMEZONE "Europe/Berlin"
-ENV MAGENTO_USE_REWRITES "1"
-ENV MAGENTO_BACKEND_FRONTNAME "admin_nimda"
+ENV MAGENTO_BASE_URL="http://shop.local"
+ENV MAGENTO_DB_HOST="database"
+ENV MAGENTO_DB_USER="shop"
+ENV MAGENTO_DB_PASSWORD="secret123"
+ENV MAGENTO_DB_NAME="shop"
+ENV MAGENTO_ADMIN_FIRSTNAME="Average"
+ENV MAGENTO_ADMIN_LASTNAME="Joe"
+ENV MAGENT_ADMIN_EMAIL="average.joe@example.org"
+ENV MAGENTO_ADMIN_USER="admin"
+ENV MAGENTO_ADMIN_PASSWORD="secret123"
+ENV MAGENTO_LANGUAGE="de_DE"
+ENV MAGENTO_CURRENCY="EUR"
+ENV MAGENTO_TIMEZONE="Europe/Berlin"
+ENV MAGENTO_USE_REWRITES="1"
+ENV MAGENTO_BACKEND_FRONTNAME="admin_nimda"
+
+ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS="0"
+ENV PHP_OPCACHE_MAX_ACCELERATED_FILES="10000"
+ENV PHP_OPCACHE_MEMORY_CONSUMPTION="192"
+ENV PHP_OPCACHE_MAX_WASTED_PERCENTAGE="10"
+ENV PHP_MEMORY_LIMIT="-1"
 
 RUN apt-get update && apt-get install -y \
     libcurl4-openssl-dev \
@@ -46,7 +53,8 @@ RUN docker-php-ext-configure \
     simplexml \
     soap \
     xsl \
-    zip
+    zip \
+    opcache
 
 RUN mkdir -p /opt/composer \
   && cd /opt/composer \
@@ -54,7 +62,10 @@ RUN mkdir -p /opt/composer \
   && chmod +x /opt/composer/composer.phar \
   && ln -fsn /opt/composer/composer.phar /usr/bin/composer
 
-RUN composer create-project --repository-url=https://${MAGENTO_PUBLIC_KEY}:${MAGENTO_PRIVATE_KEY}@repo.magento.com/ magento/project-community-edition /var/www/html
+RUN composer create-project \
+    --repository-url=https://${MAGENTO_PUBLIC_KEY}:${MAGENTO_PRIVATE_KEY}@repo.magento.com/ \
+    magento/project-community-edition=${MAGENTO_VERSION} \
+    /var/www/html
 
 RUN cd /var/www/html/ \
   && find var generated vendor pub/static pub/media app/etc -type f -exec chmod g+w {} + \
