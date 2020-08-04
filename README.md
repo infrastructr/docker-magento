@@ -29,6 +29,13 @@ Available parameters along with the default values listed below.
     MAGENTO_TIMEZONE: Europe/Berlin
     MAGENTO_USE_REWRITES: 1
     MAGENTO_BACKEND_FRONTNAME: admin_nimda
+    MAGENTO_2FA_ENABLE: 'false'
+    MAGENTO_SEARCH_ENGINE: elasticsearch7
+    MAGENTO_ELASTICSEARCH_HOSTNAME: search
+    MAGENTO_ELASTICSEARCH_PORT: 9200    
+    MAGENTO_ELASTICSEARCH_ENABLE_AUTH: 'true'
+    MAGENTO_ELASTICSEARCH_USERNAME: elastic
+    MAGENTO_ELASTICSEARCH_PASSWORD: secret123
     
 ## Development
 Run locally built image

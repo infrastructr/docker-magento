@@ -18,6 +18,16 @@ bin/magento setup:install \
 --timezone="${MAGENTO_TIMEZONE}" \
 --use-rewrites="${MAGENTO_USE_REWRITES}" \
 --backend-frontname="${MAGENTO_BACKEND_FRONTNAME}" \
+--search-engine="${MAGENTO_SEARCH_ENGINE}" \
+--elasticsearch-host="${MAGENTO_ELASTICSEARCH_HOSTNAME}" \
+--elasticsearch-port="${MAGENTO_ELASTICSEARCH_PORT}" \
+--elasticsearch-enable-auth="${MAGENTO_ELASTICSEARCH_ENABLE_AUTH}" \
+--elasticsearch-username="${MAGENTO_ELASTICSEARCH_USERNAME}" \
+--elasticsearch-password="${MAGENTO_ELASTICSEARCH_PASSWORD}" \
+
+if [ "$MAGENTO_2FA_ENABLE" = "false" ]; then
+    bin/magento module:disable Magento_TwoFactorAuth
+fi
 
 /magento-post-install.sh
 

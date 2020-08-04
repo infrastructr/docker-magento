@@ -76,12 +76,12 @@ RUN cd /var/www/html/ \
 
 RUN a2enmod rewrite
 
-COPY .docker/ /
-
 RUN apt-get update && apt-get install -y \
     git \
     zip \
   && rm -rf /var/lib/apt/lists/*
+
+COPY .docker/ /
 
 RUN chmod +x /docker-entrypoint.sh /magento-post-install.sh
 
