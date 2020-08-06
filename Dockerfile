@@ -83,7 +83,7 @@ RUN apt-get update && apt-get install -y \
 
 COPY .docker/ /
 
-RUN chmod +x /docker-entrypoint.sh /magento-post-install.sh
+RUN chmod +x /docker-entrypoint.sh /magento-install.sh /magento-post-install.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
