@@ -1,6 +1,6 @@
 #!/bin/sh
 
-/var/www/html/bin/magento setup:install \
+bin/magento setup:install \
     --base-url="${MAGENTO_BASE_URL}" \
     --db-host="${MAGENTO_DB_HOST}" \
     --db-name="${MAGENTO_DB_NAME}" \
@@ -24,5 +24,5 @@
     --elasticsearch-password="${MAGENTO_ELASTICSEARCH_PASSWORD}"
 
 if [ "$MAGENTO_2FA_ENABLE" = "false" ]; then
-    /var/www/html/bin/magento module:disable Magento_TwoFactorAuth
+    bin/magento module:disable Magento_TwoFactorAuth
 fi
