@@ -1,7 +1,7 @@
 #!/bin/sh
 
 n=0
-until [ "$n" -ge 5 ]
+until [ "$n" -ge "$MAGENTO_UPSTREAM_SERVICE_TIMEOUT" ]
 do
    echo "Waiting for database connection ($n)..."
    mysqladmin ping -h"${MAGENTO_DB_HOST}" --silent && break
